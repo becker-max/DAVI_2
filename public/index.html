@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>FIFA 19 players analysis</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/main.css">
+
+
+    <!-- Load d3.js -->
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+</head>
+
+<body>
+    <!-- NAVIGATION BAR -->
+    <div class="w3-top">
+        <div class="w3-bar w3-white" id="myNavbar">
+            <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
+                <i class="fa fa-bars"></i>
+            </a>
+            <a href="#home" class="w3-bar-item w3-button" style="background-color: grey;color:white;">HOME</a>
+            <a href="#info" class="w3-bar-item w3-button">Project Info</a>
+            <a href="#data" class="w3-bar-item w3-button">Data</a>
+            <a href="#viz" class="w3-bar-item w3-button">Visualization</a>
+            <a href="#design" class="w3-bar-item w3-button">Design Choices</a>
+            <a href="#sketch" class="w3-bar-item w3-button">Sketches</a>
+            <a href="#ref" class="w3-bar-item w3-button">References</a>
+            <a href="#reflection" class="w3-bar-item w3-button">Reflection</a>
+            <a href="#team" class="w3-bar-item w3-button">Team</a>
+        </div>
+    </div>
+
+    <!-- FIRST BG IMAGE / HOME SCREEN -->
+    <div class="bgimg-1 w3-display-containeer w3-opacity-min" id="home">
+        <div class="w3-display-middle" style="white-space:nowrap;">
+            <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">
+                <b>Group 9:</b>
+                FIFA 19 players analysis
+            </span>
+        </div>
+    </div>
+
+    <!-- SECTION PROJECT INFO   -->
+    <div class="w3-content w3-container w3-padding-64" id="info">
+        <h2 class="w3-center">Project Info</h2>
+        <h3>Motivation</h3>
+        <p>
+            Since both of us were convinced from the start of the module, that we won't be collecting data, but rather use an already an existing dataset, we search for quiet some time - and struggled some time with this. We then thought about our hobbies, interest and affinities. Both are interested in sports: Rafael plays in a regional football club and Tobias is part of a fire engine. Both really like to play video games - so we had a further scope to search for and finally found an interesting data collection: <b>FIFA 19 players</b>
+        </p>
+    </div>
+
+    <!-- SECOND BG IMAGE WITH Data TEXT -->
+    <div class="bgimg-2 w3-display-container w3-opacity-min">
+        <div class="w3-display-middle" style="background-color: white;width:40%;height: 50%;opacity: 60%">
+        </div>
+        <div class="w3-display-middle" style="white-space:nowrap;">
+            <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">
+                <b>How we proceeded</b>
+            </span>
+        </div>
+    </div>
+    <br />
+    <!-- SECTION DATA   -->
+    <div class="w3-content w3-container w3-padding-64" id="data" style="padding-bottom: 10px!important;">
+        <h2 class="w3-center">Our Data</h2>
+        <p>As stated previously, we decided to analyze FIFA player stats. We found a suiting file on <a href="https://www.kaggle.com/karangadiya/fifa19">Kaggle</a>. The dataset is a csv where columns are separated by commas. The information is vast and not all of the dimensions will be used in our projections & visualisations. We will mainly focus on the following stats:
+        </p>
+        <p><img src="Dimensions2.png" style="width: 50%;display: block; margin-left: auto; margin-right: auto;padding-top: 30px;"></p>
+
+        <p><span style="color:red"><b>Notes:</b></span>
+            <ul>
+                <li>
+                    The below data is reflecting values for players origin rather than where they currently play (e.g.: The numbers in Egypt are means of all players with home country Egypt).
+                </li>
+                <li>
+                    Not all countries have data available. We are using data provided by the Kagle dataset referenced further above on this page.
+                </li>
+                <li>
+                    Player ratings are numbers from 1 to 99, where a higher number means a better overall rating. Player values & wages are normal values in EUR.
+                </li>
+            </ul>
+        </p>
+        <h4>Instructions</h4>
+        <ol style="text-align: left;padding-left: 150px;">
+            <li>
+                Select your filter criterias
+            </li>
+            <li>
+                Click the "Click Me!" button
+            </li>
+            <li>
+                (optional) Choose another value to be displayed
+            </li>
+            <li>
+                Enjoy the changes in the graph :-)
+            </li>
+        </ol>
+    </div>
+
+    <!-- SECTION VISUALIZATION -->
+    <div class="w3-content w3-container w3-center" id="viz" style="padding-bottom: 0">
+        <h2>Visualization</h2>
+
+        <h4>Choose your filter settings</h4>
+        <p>
+            <div id="wrapper" style="padding-bottom: 10px">
+
+                <table style="width:100%;border: none">
+                    <tr>
+                        <td>
+                            <b>Position</b>
+                        </td>
+                        <td>
+                            <b>Player Rating</b>
+                        </td>
+                        <td>
+                            <b>Player Age</b>
+                        </td>
+                        <td>
+                            <b>Recalculate</b>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <select multiple id="position">
+                                <option value="Attack">Attack</option>
+                                <option value="Midfield">Midfield</option>
+                                <option value="Defense">Defense</option>
+                            </select>
+                        </td>
+                        <td>
+                            <span>From</span>
+                            <input type="text" id="rating_from" value="00" disabled style="width:40px;text-align: center">
+                            <input type="range" name="rangeInput" min="0" max="100" value="00" onchange="updateRatingFromInput(this.value);">
+                            <script>
+                                function updateRatingFromInput(val) {
+                                    document.getElementById("rating_from").value = val;
+                                }
+
+                            </script><br>
+                            <span>To&nbsp;&nbsp;</span>
+                            <input type="text" id="rating_to" value="100" disabled style="width:40px;text-align: center">
+                            <input type="range" name="rangeInput" min="0" max="100" value="100" onchange="updateRatingToInput(this.value);">
+                            <script>
+                                function updateRatingToInput(val) {
+                                    document.getElementById("rating_to").value = val;
+                                }
+
+                            </script>
+                        </td>
+                        <td>
+                            <span>From</span>
+                            <input type="text" id="age_from" value="00" disabled style="width:40px;text-align: center">
+                            <input type="range" name="rangeInput" min="0" max="100" value="00" onchange="updateAgeFromInput(this.value);">
+                            <script>
+                                function updateAgeFromInput(val) {
+                                    document.getElementById("age_from").value = val;
+                                }
+
+                            </script><br>
+                            <span>To&nbsp;&nbsp;</span>
+                            <input type="text" id="age_to" value="100" disabled style="width:40px;text-align: center">
+                            <input type="range" name="rangeInput" min="0" max="100" value="100" onchange="updateAgeToInput(this.value);">
+                            <script>
+                                function updateAgeToInput(val) {
+                                    document.getElementById("age_to").value = val;
+                                }
+
+                            </script>
+                        </td>
+
+                        <td>
+                            <input id="clickMe" type="button" value="Click Me!">
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <h3>Hover over countries</h3>
+                <div style="width: 1000; height: 800; background-color: #DDDDDD;">
+
+                    <select id="selectButton"></select>
+                    <svg id="my_dataviz" width="1000" height="500"></svg>
+                    <div class="tooltip"></div>
+                    <script src="visualization.js"></script>
+
+                </div>
+
+            </div>
+    </div>
+
+    <br />
+    <!-- SECTION DESIGN -->
+    <div class="w3-content w3-container w3-padding-64" id="design" style="padding-top: 10px!important">
+        <h2 class="w3-center">Design Choices</h2>
+        <p>We first had to analyze and transform the data. It quickly became clear that the quality of the data left a lot to be desired.
+            With the cleansed data, we first looked at how we could achieve our design goals described above.</p>
+        <br />
+
+        <h3>Choosing the right visualization</h3>
+        <p>We made different sketches and realized that the most understandable and clear presentation was a map that
+            assigned different colors to countries given specific data ranges. Nevertheless, we had to keep in mind that there
+            is only a certain number of colours that can be easily distinguished. Therefore, as soon as you move a mouse
+            over the countries, they get a contour that indicates the exact size of the country. In addition, we decided
+            to use a tooltip which, for example, shows the exact average rating of the players in a country.</p>
+        <br />
+
+        <h3>Foundations Visual Design</h3>
+        <p>Our initial goal was to visualise a quick overview of the FIFA player ratings for each country. Kagle's data set gave us information about the individual players and their origins. With this information we could concentrate ourselves on giving simple and quick information on which countries offer better players (alongside other possible criterias) rather than overflow the visualization with additional data.</p>
+        <br />
+
+        <h3>Fundamental Principals of Analytical Design </h3>
+        <p>Our visualization is dividede into two parts: One for the purposes of brushing the data, the other for the actual visualization and fast adjustment of a given criteria. The dimensions implemented require the following:</p>
+        <ul>
+            <li>
+                Longitude & latitude to draw each individual country
+            </li>
+            <li>
+                Color ratio to display differences in selected value
+            </li>
+            <li>
+                Tooltip to allow for detail on demand & "Integration of Evidence"
+            </li>
+        </ul>
+
+        <p>We have implemented several brushing & filter criterias. Without any settings done, the first overview will be the overal mean player rating. The color scale ranges from white (no data available) to a dark orange (darker = higher average). The color gradient is based on the data selected for display, which can be set just above the map itself. We set 8 different steps in this gradient since we thought that this offered the best deal out of seeing to little to too much differences.</p>
+        <br />
+
+        <h3>Data-Ink Ratio</h3>
+        <p>To maximize the efficiency of our visualization, we took good care of how big our visualizations are, how much space each individual information needs (e.g. our tooltip) and how much data is really needed. </p>
+        <p>“A large share of ink on a graphic should present data-information, the ink changing as the data change. Data-ink is the non-erasable core of a graphic, the non-redundant ink arranged in response to variation in the numbers represented.” Tufte, 1983</p>
+        <p>When we designed our map we held the data-ink ratio as high as possible.</p>
+        <br />
+
+        <h3>Human Perception</h3>
+        <p>Whilst programming this website, we laid a big importance on the flow whilst reading and scrolling through the page. To enhance the engagement and visual attractiveness we settled for a "cool" website template, which suited our topic. </p>
+        <p>Starting with a top navigation bar, clear instructions and informations about our data, and then followed by our visualization, we found a good approach on how the user is being guided through our project.The transition of actions is natural, causal and hierarchical.The visual changes, when filters are applied, further increase the interactivity.</p>
+        <br />
+
+        <h3>Interaction Concept</h3>
+        <p>Our visualizations consist of brushing and filtering. As soon as the desired filters are being selected and the "Calculate" button is clicked, the data will be usable for further brushing. Once a country gets hovered over (brushing), the country gets highlighted and a tooltip appears with more information. As soon as the visitor changes the mouse position to another country, the tooltip and highlighting changes to the given country.</p>
+
+    </div>
+
+    <!-- SECTION SKETCH -->
+    <div class="w3-content w3-container w3-padding-64" id="sketch" style="padding-top: 10px!important">
+        <h2 class="w3-center">Sketches and future ideas</h2>
+        <p>When we transformed the data, we had different ideas about how best to visualize the data.
+            For a better understanding we have integrated some of these sketches into our website.</p>
+        <div>
+            <img src="Sketch_Spider_Chart.png" style="width: 35%;display: inline;padding-top: 30px;">
+            <img src="Sketch_Skills.png" style="width: 30%;display: inline;padding-top: 30px;">
+            <img src="Sketch_Violin.png" style="width: 30%;display: inline;padding-top: 30px;">
+        </div>
+        <p>Due to the given time limit of this module, we didn't have the chance to visualize all of our conceptual work. However there are some neat implementations possible, as soon as a country is selected. Alternatively, we could have used more dimensions from the dataset provided to develop visualizations for indivual player or country averages based on certain skills, as shown above.</p>
+        <div>
+            <img src="Sketch_Field.png" style="width: 45%;display: inline;padding-top: 30px;">
+            <img src="Sketch_Comparison.png" style="width: 45%;display: inline;padding-top: 30px;">
+        </div>
+    </div>
+
+    <!-- SECTION DESIGN -->
+    <div class="w3-content w3-container w3-padding-64" id="ref" style="padding-top: 10px!important">
+        <h2 class="w3-center">References</h2>
+        <p>To develop our d3 visualization we used different sources to build our knowledge:</p>
+        <u>
+            <li>https://www.tutorialsteacher.com/d3js</li>
+            <li>https://www.d3-graph-gallery.com/index.html</li>
+
+        </u>
+        <p>The general template of our website was contributed by Anja Zimmermann on <a href="https://elearning.hslu.ch/ilias/ilias.php?ref_id=4171650&cmdClass=ilobjforumgui&thr_pk=30855&cmd=viewThread&cmdNode=xu:ok&baseClass=ilrepositorygui">Ilias</a>.</p>
+        <p>As stated before, our dataset was retrieved from Kagle: <a href="https://www.kaggle.com/karangadiya/fifa19">Link to dataset</a></p>
+        <p>We worked in close collaboration with the group of Maximilian Becker & Philippe Schwarzer - Some similarities might be discoverable :-)</p>
+
+    </div>
+
+    <!-- SECTION REFLECTION -->
+    <div class="w3-content w3-container w3-padding-64" id="reflection" style="padding-top: 10px!important">
+        <h2 class="w3-center">Reflection</h2>
+        <h4>What did we learn?</h4>
+        <ul>
+            <li>
+                How to search for an appropriat dataset & how important a clean data baseline is.
+            </li>
+            <li>
+                How to develop visualisations with d3 from the start to the implementation.
+            </li>
+            <li>
+                What the limits are and how time limits constrain our designing process.
+            </li>
+        </ul>
+        <h4>What would we do better next time?</h4>
+        <ul>
+            <li>
+                Focus on one or two visualisations rather than thinking in many approaches.
+            </li>
+            <li>
+                Create a working prototype faster to further develop ideas.
+            </li>
+            <li>
+                Spend more time learning the d3 library, since some of our approaches could have been developed way easier.
+            </li>
+        </ul>
+        <p>All in all, we learned a lot throughout the projects duration. Both of has have never used d3 before and we were inspired, since we didn't know that creating graphs using only JS, HTML & CSS would be that simple, given the time constraint.</p>
+    </div>
+
+    <!-- SECTION Team -->
+    <div class="w3-content w3-container w3-padding-64" id="team" style="padding-top: 10px!important">
+        <h2 class="w3-center">Team</h2>
+        <div class="w3-center">
+            <h3 style="display: inline">Rafael Gomes Machado,</h3>
+            <p style="display: inline">rafael.gomesmachado@stud.hslu.ch</p>
+        </div>
+        <div class="w3-center">
+            <h3 style="display: inline">Tobias Schär,</h3>
+            <p style="display: inline">tobias.schaer@stud.hslu.ch</p>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
